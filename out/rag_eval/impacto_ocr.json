@@ -1,0 +1,194 @@
+{
+  "sin_ocr": {
+    "n_chunks": 410,
+    "recall": 0.0,
+    "aciertos": 0,
+    "total": 8,
+    "detalle": [
+      {
+        "id": "q01",
+        "encontrada": false,
+        "recuperado": [
+          "cs224n_l08:p57[PLUMBER]",
+          "cs224n_l08:p56[PLUMBER]",
+          "cs224n_l08:p58[PLUMBER]",
+          "cs224n_l08:p24[PLUMBER]",
+          "cs224n_l08:p45[PLUMBER]"
+        ]
+      },
+      {
+        "id": "q02",
+        "encontrada": false,
+        "recuperado": [
+          "cs231n_l9:p9[PLUMBER]",
+          "cs231n_l9:p89[PLUMBER]",
+          "cs231n_l9:p80[PLUMBER]",
+          "cs224n_l08:p61[PLUMBER]",
+          "cs231n_l9:p87[PLUMBER]"
+        ]
+      },
+      {
+        "id": "q03",
+        "encontrada": false,
+        "recuperado": [
+          "cs224n_l01:p30[PLUMBER]",
+          "cs231n_l5:p13[PLUMBER]",
+          "cs231n_l9:p12[PLUMBER]",
+          "cs231n_l5:p12[PLUMBER]",
+          "cs231n_l9:p105[PLUMBER]"
+        ]
+      },
+      {
+        "id": "q04",
+        "encontrada": false,
+        "recuperado": [
+          "cs224n_l01:p13[PLUMBER]",
+          "cs224n_l08:p53[PLUMBER]",
+          "cs224n_l08:p57[PLUMBER]",
+          "cs224n_l08:p65[PLUMBER]",
+          "cs224n_l08:p56[PLUMBER]"
+        ]
+      },
+      {
+        "id": "q05",
+        "encontrada": false,
+        "recuperado": [
+          "cs231n_l11:p103[PLUMBER]",
+          "cs224n_l08:p56[PLUMBER]",
+          "cs231n_l11:p104[PLUMBER]",
+          "cs224n_l08:p53[PLUMBER]",
+          "cs231n_l5:p61[PLUMBER]"
+        ]
+      },
+      {
+        "id": "q06",
+        "encontrada": false,
+        "recuperado": [
+          "cs231n_l9:p84[PLUMBER]",
+          "cs224n_l08:p18[PLUMBER]",
+          "cs224n_l01:p20[PLUMBER]",
+          "cs231n_l5:p12[PLUMBER]",
+          "cs231n_l5:p13[PLUMBER]"
+        ]
+      },
+      {
+        "id": "q07",
+        "encontrada": false,
+        "recuperado": [
+          "cs224n_l08:p44[PLUMBER]",
+          "cs224n_l08:p32[PLUMBER]",
+          "cs224n_l08:p57[PLUMBER]",
+          "cs224n_l08:p36[PLUMBER]",
+          "cs224n_l08:p40[PLUMBER]"
+        ]
+      },
+      {
+        "id": "q08",
+        "encontrada": false,
+        "recuperado": [
+          "cs224n_l08:p61[PLUMBER]",
+          "cs224n_l08:p4[PLUMBER]",
+          "cs224n_l08:p3[PLUMBER]",
+          "cs224n_l08:p28[PLUMBER]",
+          "cs224n_l08:p58[PLUMBER]"
+        ]
+      }
+    ]
+  },
+  "con_ocr": {
+    "n_chunks": 440,
+    "recall": 0.875,
+    "aciertos": 7,
+    "total": 8,
+    "detalle": [
+      {
+        "id": "q01",
+        "encontrada": true,
+        "recuperado": [
+          "cs224n_l08:p62[OCR]",
+          "cs224n_l08:p57[PLUMBER]",
+          "cs224n_l08:p56[PLUMBER]",
+          "cs224n_l08:p58[PLUMBER]",
+          "cs224n_l08:p24[PLUMBER]"
+        ]
+      },
+      {
+        "id": "q02",
+        "encontrada": true,
+        "recuperado": [
+          "cs231n_l9:p88[OCR]",
+          "cs231n_l9:p9[PLUMBER]",
+          "cs231n_l9:p89[PLUMBER]",
+          "cs231n_l9:p80[PLUMBER]",
+          "cs224n_l08:p61[PLUMBER]"
+        ]
+      },
+      {
+        "id": "q03",
+        "encontrada": false,
+        "recuperado": [
+          "cs224n_l01:p30[PLUMBER]",
+          "cs231n_l5:p13[PLUMBER]",
+          "cs231n_l9:p12[PLUMBER]",
+          "cs231n_l5:p12[PLUMBER]",
+          "cs231n_l9:p105[PLUMBER]"
+        ]
+      },
+      {
+        "id": "q04",
+        "encontrada": true,
+        "recuperado": [
+          "cs224n_l08:p69[OCR]",
+          "cs224n_l01:p13[PLUMBER]",
+          "cs224n_l08:p53[PLUMBER]",
+          "cs224n_l08:p57[PLUMBER]",
+          "cs224n_l08:p65[PLUMBER]"
+        ]
+      },
+      {
+        "id": "q05",
+        "encontrada": true,
+        "recuperado": [
+          "cs231n_l11:p102[OCR]",
+          "cs231n_l11:p103[PLUMBER]",
+          "cs224n_l08:p56[PLUMBER]",
+          "cs231n_l11:p104[PLUMBER]",
+          "cs224n_l08:p53[PLUMBER]"
+        ]
+      },
+      {
+        "id": "q06",
+        "encontrada": true,
+        "recuperado": [
+          "cs231n_l9:p84[PLUMBER]",
+          "cs224n_l08:p18[PLUMBER]",
+          "cs231n_l9:p107[OCR]",
+          "cs224n_l01:p20[PLUMBER]",
+          "cs231n_l5:p12[PLUMBER]"
+        ]
+      },
+      {
+        "id": "q07",
+        "encontrada": true,
+        "recuperado": [
+          "cs224n_l08:p47[OCR]",
+          "cs224n_l08:p33[OCR]",
+          "cs224n_l08:p48[OCR]",
+          "cs224n_l08:p44[PLUMBER]",
+          "cs224n_l08:p32[PLUMBER]"
+        ]
+      },
+      {
+        "id": "q08",
+        "encontrada": true,
+        "recuperado": [
+          "cs224n_l08:p61[PLUMBER]",
+          "cs224n_l01:p11[OCR]",
+          "cs224n_l08:p4[PLUMBER]",
+          "cs224n_l08:p3[PLUMBER]",
+          "cs224n_l08:p28[PLUMBER]"
+        ]
+      }
+    ]
+  }
+}

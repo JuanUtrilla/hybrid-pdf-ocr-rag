@@ -1,0 +1,22 @@
+# Descarga del corpus
+httpx>=0.27,<1.0
+
+# Extraccion de texto nativo y render de pagina
+pdfplumber>=0.11,<0.12
+pypdfium2>=4.30
+
+# OCR
+rapidocr-onnxruntime>=1.4,<2.0
+onnxruntime>=1.17
+
+# Imagen y calculo
+opencv-python>=4.9
+numpy>=1.26
+
+# Retrieval e indice
+scikit-learn>=1.4
+joblib>=1.4
+
+# Embeddings y generacion local
+torch>=2.4
+transformers>=4.44
