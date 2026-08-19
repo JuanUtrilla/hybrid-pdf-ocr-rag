@@ -108,6 +108,25 @@ La vía que sí funciona es usar el OCR como árbitro: renderizar la página, pa
 y comparar con la capa de texto. Si las dos lecturas discrepan mucho, una está mal.
 Está pendiente de implementar.
 
+## Ver el pipeline funcionando
+
+`scripts/viz_animation.py` genera una animación de 18 segundos que recorre el pipeline
+entero sobre una página real: detección de cajas, reconocimiento, reconstrucción de
+espacios, chunking con procedencia y recuperación final.
+
+![Pipeline completo](out/figuras/pipeline.gif)
+
+Las láminas sueltas están en `out/figuras/carrusel_*.png`. Todas las visualizaciones se
+generan desde el resultado cacheado del OCR (`scripts/cache_ocr.py`), así que no hay
+números escritos a mano: cada cifra que aparece sale de los ficheros de medición.
+
+```bash
+python scripts/cache_ocr.py --pdf data/pdf/cs224n_l01.pdf --page 15 --out-dir out/cache
+PYTHONPATH=scripts python scripts/viz_animation.py
+PYTHONPATH=scripts python scripts/viz_post_ocr.py
+PYTHONPATH=scripts python scripts/viz_post_gazeta.py
+```
+
 ## Cómo reproducirlo
 
 ```bash
@@ -137,7 +156,12 @@ SHA-256 de cada uno.
 | `ocr_normalize.py` | Reconstruye los espacios que el OCR pierde |
 | `extract_corpus.py` | Aplica la política medida y emite el texto con su procedencia |
 | `rag_eval.py` | Construye los dos índices y mide el impacto del OCR sobre el recall |
-| `make_figure.py` | Genera la figura antes/después de una página |
+| `make_figure.py` | Figura antes/después de una página, en formato ancho |
+| `cache_ocr.py` | Cachea render, cajas de detección y texto de una página |
+| `viz_common.py` | Paleta, tipografía y primitivas de las visualizaciones |
+| `viz_animation.py` | Animación del pipeline completo, en GIF y MP4 |
+| `viz_post_ocr.py` | Lámina del contraste pdfplumber contra OCR |
+| `viz_post_gazeta.py` | Lámina de la capa de texto corrupta |
 
 Cada página extraída conserva su procedencia (`PLUMBER`, `OCR` o `EMPTY`), la
 confianza del OCR y las señales que motivaron la decisión. Sin ese rastro no se puede

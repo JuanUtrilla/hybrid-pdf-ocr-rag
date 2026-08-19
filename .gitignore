@@ -20,3 +20,6 @@ out/native/
 out/apuntes/
 out/yield_apuntes/
 out/qgis_profile.log
+
+# Cache de render y OCR: contiene la pagina completa y su texto, se regenera
+out/cache/
