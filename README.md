@@ -162,6 +162,7 @@ SHA-256 de cada uno.
 | `viz_animation.py` | Animación del pipeline completo, en GIF y MP4 |
 | `viz_post_ocr.py` | Lámina del contraste pdfplumber contra OCR |
 | `viz_post_gazeta.py` | Lámina de la capa de texto corrupta |
+| `viz_carrusel_pdf.py` | Empaqueta las láminas en un PDF deslizable |
 
 Cada página extraída conserva su procedencia (`PLUMBER`, `OCR` o `EMPTY`), la
 confianza del OCR y las señales que motivaron la decisión. Sin ese rastro no se puede
