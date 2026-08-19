@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Miniatura del video: la pagina, sus cajas y el contraste que engancha.
+"""Portada de la animacion: la pagina, sus cajas y el contraste principal.
 
-LinkedIn toma por defecto el primer fotograma, que aqui no cuenta nada.
-Esta lamina se lee entera al tamano al que aparece en el feed.
+El primer fotograma de la animacion no resume nada por si solo. Esta lamina
+si, y sigue siendo legible muy reducida.
 """
 
 from __future__ import annotations
@@ -20,7 +20,7 @@ from viz_common import (BLUE, CARD, FG, GREEN, H, MUTED, RED, W, canvas, card,
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--cache", default="out/cache/cs224n_l01_p15")
-    parser.add_argument("--out", default="out/figuras/miniatura.png")
+    parser.add_argument("--out", default="out/figuras/portada.png")
     args = parser.parse_args()
 
     data = json.loads(Path(f"{args.cache}.json").read_text(encoding="utf-8"))
@@ -37,7 +37,7 @@ def main() -> None:
     pos = ((W - thumb.width) // 2, y + 13)
     img.paste(thumb, pos)
 
-    # las cajas del detector, que es lo que identifica al video de un vistazo
+    # las cajas del detector, que anticipan de que va la animacion
     overlay = Image.new("RGBA", img.size, (0, 0, 0, 0))
     od = ImageDraw.Draw(overlay)
     sx, sy = thumb.width / data["size"][0], thumb.height / data["size"][1]

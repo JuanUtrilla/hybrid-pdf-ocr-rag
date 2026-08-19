@@ -116,15 +116,16 @@ espacios, chunking con procedencia y recuperación final.
 
 ![Pipeline completo](out/figuras/pipeline.gif)
 
-Las láminas sueltas están en `out/figuras/carrusel_*.png`. Todas las visualizaciones se
-generan desde el resultado cacheado del OCR (`scripts/cache_ocr.py`), así que no hay
-números escritos a mano: cada cifra que aparece sale de los ficheros de medición.
+Los seis pasos están también como láminas sueltas en `out/figuras/paso_*.png`, y
+agrupados en `pipeline_laminas.pdf` para leerlos con calma. Todas las visualizaciones se
+generan desde el resultado cacheado del OCR, así que no hay números escritos a mano:
+cada cifra que aparece sale de los ficheros de medición.
 
 ```bash
 python scripts/cache_ocr.py --pdf data/pdf/cs224n_l01.pdf --page 15 --out-dir out/cache
 PYTHONPATH=scripts python scripts/viz_animation.py
-PYTHONPATH=scripts python scripts/viz_post_ocr.py
-PYTHONPATH=scripts python scripts/viz_post_gazeta.py
+PYTHONPATH=scripts python scripts/viz_contraste.py
+PYTHONPATH=scripts python scripts/viz_capa_corrupta.py
 ```
 
 ## Cómo reproducirlo
@@ -160,10 +161,10 @@ SHA-256 de cada uno.
 | `cache_ocr.py` | Cachea render, cajas de detección y texto de una página |
 | `viz_common.py` | Paleta, tipografía y primitivas de las visualizaciones |
 | `viz_animation.py` | Animación del pipeline completo, en GIF y MP4 |
-| `viz_post_ocr.py` | Lámina del contraste pdfplumber contra OCR |
-| `viz_post_gazeta.py` | Lámina de la capa de texto corrupta |
-| `viz_carrusel_pdf.py` | Empaqueta las láminas en un PDF deslizable |
-| `viz_thumbnail.py` | Miniatura del vídeo con el contraste principal |
+| `viz_contraste.py` | Lámina del contraste pdfplumber contra OCR |
+| `viz_capa_corrupta.py` | Lámina de la capa de texto corrupta |
+| `viz_laminas_pdf.py` | Agrupa las láminas en un único PDF |
+| `viz_portada.py` | Portada de la animación con el contraste principal |
 
 Cada página extraída conserva su procedencia (`PLUMBER`, `OCR` o `EMPTY`), la
 confianza del OCR y las señales que motivaron la decisión. Sin ese rastro no se puede

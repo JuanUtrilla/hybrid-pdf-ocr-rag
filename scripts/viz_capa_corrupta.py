@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Imagen del post de RAG: una capa de texto que existe pero esta corrupta."""
+"""Lamina de la capa de texto que existe, parece valida y esta corrupta."""
 
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--cache", default="out/cache/gazeta_1750_p1")
     parser.add_argument("--profile", default="out/profiles/gazeta_1750.jsonl")
-    parser.add_argument("--out", default="out/figuras/post_gazeta.png")
+    parser.add_argument("--out", default="out/figuras/capa_corrupta.png")
     args = parser.parse_args()
 
     data = json.loads(Path(f"{args.cache}.json").read_text(encoding="utf-8"))

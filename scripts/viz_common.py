@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """Paleta, tipografia y primitivas comunes de las visualizaciones.
 
-Formato pensado para el feed de LinkedIn: vertical 4:5, fondo oscuro para
-destacar sobre el fondo blanco del feed, y cuerpos de texto grandes porque
-la mayoria lo vera en un movil.
+Las laminas son verticales 4:5 y de fondo oscuro, y usan cuerpos de texto
+grandes para seguir siendo legibles reducidas o en pantalla pequena.
 """
 
 from __future__ import annotations
@@ -13,7 +12,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-W, H = 1200, 1500                      # 4:5, el formato que mas espacio ocupa en el feed
+W, H = 1200, 1500                      # vertical 4:5
 
 BG = (14, 17, 23)
 CARD = (24, 28, 37)

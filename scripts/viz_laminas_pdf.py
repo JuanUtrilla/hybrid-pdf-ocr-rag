@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Empaqueta las laminas del carrusel en un PDF.
+"""Empaqueta las laminas de la animacion en un unico PDF.
 
-LinkedIn convierte un PDF subido como documento en un carrusel deslizable.
-Es la alternativa al video cuando el contenido lleva texto que conviene leer
-con calma en vez de verlo pasar.
+Util cuando conviene leer los pasos con calma, o imprimirlos, en vez de ver
+pasar la animacion.
 """
 
 from __future__ import annotations
@@ -16,9 +15,9 @@ from PIL import Image
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Carrusel en PDF para LinkedIn")
-    parser.add_argument("--laminas", default="out/figuras/carrusel_*.png")
-    parser.add_argument("--out", default="out/figuras/carrusel_pipeline.pdf")
+    parser = argparse.ArgumentParser(description="Laminas de la animacion en PDF")
+    parser.add_argument("--laminas", default="out/figuras/paso_*.png")
+    parser.add_argument("--out", default="out/figuras/pipeline_laminas.pdf")
     args = parser.parse_args()
 
     rutas = sorted(glob.glob(args.laminas))

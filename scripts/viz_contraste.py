@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Imagen del post de OCR: lo que ve cada metodo sobre la misma pagina."""
+"""Lamina de contraste: lo que extrae cada metodo sobre la misma pagina."""
 
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ from viz_common import (BG, CARD, FG, GREEN, H, MUTED, RED, W, canvas, card,
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--cache", default="out/cache/cs224n_l01_p15")
-    parser.add_argument("--out", default="out/figuras/post_ocr.png")
+    parser.add_argument("--out", default="out/figuras/contraste_ocr.png")
     args = parser.parse_args()
 
     data = json.loads(Path(f"{args.cache}.json").read_text(encoding="utf-8"))

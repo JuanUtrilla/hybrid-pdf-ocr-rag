@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Animacion del pipeline completo, de la pagina a la respuesta del RAG.
 
-Seis actos, pensados para verse sin sonido y en bucle en un feed:
+Seis actos, pensados para entenderse sin texto de apoyo y en bucle:
 
   1. La pagina, y lo poco que da la capa de texto.
   2. Deteccion: aparecen las cajas que encuentra el detector.
@@ -258,7 +258,7 @@ def main() -> None:
                   duration=int(1000 / FPS), loop=0, optimize=True)
     print(f"{gif}  {len(frames)} frames  {gif.stat().st_size // 1024} KB")
 
-    # MP4 via ffmpeg: LinkedIn reproduce video en bucle y con mejor calidad que un GIF
+    # MP4 ademas del GIF: mismo contenido, mucho menos peso
     import shutil
     import subprocess
     import tempfile
@@ -275,7 +275,7 @@ def main() -> None:
             check=True)
     print(f"{mp4}  {mp4.stat().st_size // 1024} KB")
 
-    # fotogramas sueltos, utiles como carrusel si se prefiere a un video
+    # fotogramas sueltos, para leer los pasos sin reproducir la animacion
     # un fotograma tardio de cada acto, cuando la animacion ya ha llegado a su estado final
     cortes = [len(a) for a in (acto1, acto2, acto3, acto_norm, acto4, acto5)]
     inicios, acc = [], 0
@@ -286,8 +286,8 @@ def main() -> None:
     claves = {n: inicios[i] + int(cortes[i] * 0.92) for i, n in enumerate(nombres)}
     for nombre, idx in claves.items():
         if idx < len(frames):
-            frames[idx].save(out.parent / f"carrusel_{nombre}.png")
-    print(f"carrusel: {len(claves)} laminas en {out.parent}")
+            frames[idx].save(out.parent / f"paso_{nombre}.png")
+    print(f"laminas: {len(claves)} en {out.parent}")
 
 
 if __name__ == "__main__":
