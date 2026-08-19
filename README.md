@@ -163,6 +163,7 @@ SHA-256 de cada uno.
 | `viz_post_ocr.py` | Lámina del contraste pdfplumber contra OCR |
 | `viz_post_gazeta.py` | Lámina de la capa de texto corrupta |
 | `viz_carrusel_pdf.py` | Empaqueta las láminas en un PDF deslizable |
+| `viz_thumbnail.py` | Miniatura del vídeo con el contraste principal |
 
 Cada página extraída conserva su procedencia (`PLUMBER`, `OCR` o `EMPTY`), la
 confianza del OCR y las señales que motivaron la decisión. Sin ese rastro no se puede
