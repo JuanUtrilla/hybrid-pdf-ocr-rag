@@ -57,7 +57,7 @@ transparencias de clase, recupera contenido que de otro modo no existe.
 
 El ejemplo canónico está en `out/figuras/`: la diapositiva 15 de CS224n Lecture 1 se
 titula *"ChatGPT, GPT-4, and more"* y es entera capturas de conversaciones.
-`pdfplumber` extrae **24 caracteres** — el título. El OCR extrae **1.273**.
+`pdfplumber` extrae **24 caracteres** — el título. El OCR extrae **1.206**.
 
 ### 3. Sin OCR el RAG no responde
 
@@ -90,8 +90,8 @@ ahora : this image is that a man is ironing clothes on an ironing board
 ## Y un problema que este triaje no resuelve
 
 El corpus incluye tres Gacetas de Madrid (1750, 1885 y 1936). El BOE ya les ha pasado
-OCR, así que traen capa de texto —hasta 12.818 caracteres por página— y **no disparan
-a ningún umbral**. Pero esa capa está corrupta:
+OCR, así que traen capa de texto —12.818 caracteres de media por página en la edición de
+1885— y **no disparan a ningún umbral**. Pero esa capa está corrupta:
 
 ```
 Vierta 6. de Diciembre de i 749      (era: Viernes)
