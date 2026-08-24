@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Politica de triaje: decide por pagina si merece la pena llamar al OCR.
 
-La regla no viene de un umbral elegido a ojo. Sale de perfilar 2.497 paginas
+La regla no viene de un umbral elegido a ojo. Sale de perfilar 2.382 paginas
 y observar que las paginas donde el OCR aporta algo comparten tres rasgos:
 poco texto nativo, tinta en el render y al menos una imagen embebida.
 

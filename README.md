@@ -4,13 +4,14 @@ Casi todos los tutoriales de RAG sobre PDF empiezan igual: extraer el texto con
 `pdfplumber` o PyMuPDF, trocear, indexar. Y casi todos añaden, como nota al pie, que
 si el PDF es un escaneo "habrá que meter OCR". Nadie dice **cuándo**.
 
-Este repositorio responde a esa pregunta midiendo, no opinando. Perfila 2.382 páginas
-de 13 documentos públicos, compara políticas de triaje y termina evaluando qué le pasa
+Aquí está medido. 2.382 páginas de 13 documentos públicos, perfiladas una a una,
+varias políticas de triaje comparadas entre sí y, al final, una evaluación de qué le pasa
 a un RAG cuando se le quita el OCR.
 
-El resultado corto: **el OCR selectivo no depende de si el documento es académico u
-oficial, sino de si el contenido está rasterizado**. En un informe maquetado no aporta
-absolutamente nada. En diapositivas de clase decide si el sistema puede responder o no.
+El resultado corto: **lo que decide si el OCR sirve es que el contenido esté
+rasterizado**. El tipo de documento —académico, oficial, docente— da igual. En un informe
+maquetado el OCR no aporta absolutamente nada. En diapositivas de clase decide si el
+sistema puede responder o no.
 
 ## Los tres resultados
 
@@ -57,7 +58,9 @@ transparencias de clase, recupera contenido que de otro modo no existe.
 
 El ejemplo canónico está en `out/figuras/`: la diapositiva 15 de CS224n Lecture 1 se
 titula *"ChatGPT, GPT-4, and more"* y es entera capturas de conversaciones.
-`pdfplumber` extrae **24 caracteres** — el título. El OCR extrae **1.206**.
+`pdfplumber` extrae **24 caracteres** — el título. El OCR extrae **1.134**
+(`out/yield/cs224n_l01.jsonl`, `gain_chars: 1110`); con los espacios reconstruidos,
+1.206.
 
 ### 3. Sin OCR el RAG no responde
 
@@ -67,11 +70,19 @@ corpus, mismo retriever, mismos chunks salvo los que aporta el OCR:
 
 | Índice | Chunks | Recall@5 |
 |---|---:|---:|
-| Solo texto nativo | 410 | **0,00** (0/8) |
+| Sin los chunks de páginas OCR | 410 | **0,00** (0/8) |
 | Híbrido con OCR | 440 | **0,88** (7/8) |
 
-**Un 7 % más de chunks convierte un sistema que no responde nada en uno que responde
-siete de ocho.** Ese 7 % es justo lo que el triaje decide, y por eso el triaje importa.
+**Un 7 % más de chunks lleva el recall@5 de cero a 0,88.** Ese 7 % es justo lo que el
+triaje decide, y por eso el triaje importa.
+
+Con una advertencia sobre el 0,00, que conviene hacer yo antes que otro: el índice de
+contraste **elimina esas páginas enteras**, no sólo el texto que aportó el OCR
+(`rag_eval.py:37` les asigna cadena vacía). Las ocho páginas oro tenían entre 37 y 148
+caracteres de texto nativo —el titular de la transparencia—, así que ese cero es un
+**suelo construido, no medido**. El baseline honesto es `pdfplumber` puro y está pendiente
+de ejecutar. Y aquí no hay generación: `rag_eval.py` monta TF-IDF y coseno, así que la
+métrica es recuperación, no respuesta.
 
 ## Un cuarto hallazgo: el OCR también estropea
 
