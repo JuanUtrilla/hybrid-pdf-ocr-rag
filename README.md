@@ -116,7 +116,7 @@ OCR, así que traen capa de texto —12.818 caracteres de media por página en l
 1885— y **no disparan a ningún umbral**. Pero esa capa está corrupta:
 
 ```
-Vierta 6. de Diciembre de i 749      (era: Viena)
+Vierta 6. de Diciembre de i 749      (era: Viena 6. de Diciembre de 1749)
 paííáron fusMageftades                (era: pasaron sus Majestades)
 Igíefia de la Cafa Profefla           (era: Iglesia de la Casa Profesa)
 ```

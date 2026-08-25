@@ -13,7 +13,7 @@ from viz_common import (AMBER, CARD, FG, GREEN, H, MUTED, RED, W, canvas, card,
                         centered, fit, font, footer, text_block)
 
 ERRORES = [
-    ("Vierta 6. de Diciembre de i 749", "Viena"),
+    ("Vierta 6. de Diciembre de i 749", "Viena 6. de Diciembre de 1749"),
     ("paííáron fusMageftades", "pasaron sus Majestades"),
     ("Igíefia de la Cafa Profefla", "Iglesia de la Casa Profesa"),
 ]
