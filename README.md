@@ -20,12 +20,12 @@ sistema puede responder o no.
 La regla habitual es "si la página tiene menos de N caracteres nativos, pásale OCR".
 Con distintos valores de N sobre el mismo corpus:
 
-| Política | Págs a OCR | % del corpus | En blanco | Con ganancia real | Precisión |
-|---|---:|---:|---:|---:|---:|
-| `native_chars < 10` | 11 | 0,5 % | 8 | 1 | 9 % |
-| `native_chars < 80` | 48 | 2,0 % | 21 | 10 | 21 % |
-| `native_chars < 1000` | 929 | 39,0 % | 21 | 26 | 3 % |
-| **medido** | **75** | **3,1 %** | **0** | **26** | **35 %** |
+| Política | Págs a OCR | % del corpus | En blanco | Con ganancia medida | Cobertura de medición | Precisión sobre lo medido |
+|---|---:|---:|---:|---:|---:|---:|
+| `native_chars < 10` | 11 | 0,5 % | 8 | 1 de 3 | 27 % | 33 % |
+| `native_chars < 80` | 48 | 2,0 % | 21 | 10 de 27 | 56 % | 37 % |
+| `native_chars < 1000` | 929 | 39,0 % | 21 | 26 de 109 | 12 % | 24 % |
+| **medido** | **75** | **3,1 %** | **0** | **26 de 75** | **100 %** | **35 %** |
 
 Los tres primeros son umbrales reales que yo mismo tenía escritos en tres sitios
 distintos del mismo proyecto, sin ninguna medición detrás.
@@ -41,6 +41,17 @@ Las dos señales nuevas atacan cada una un modo de fallo:
   en este corpus y 8 son páginas literalmente en blanco.
 - `n_images` distingue "texto vectorial escaso" de "contenido dentro de una imagen".
   Sin ella se manda a OCR portadillas cuyo titular `pdfplumber` ya había leído.
+
+**Una advertencia sobre esta tabla, porque la versión anterior la contaba mal.** La
+ganancia del OCR sólo está medida en 109 de las 929 páginas que dispara el umbral de
+1000: a las otras 820 nunca se les pasó OCR. Cuando la precisión se calculaba sobre todo
+lo que dispara, esas 820 entraban en el denominador con ganancia 0 por defecto y hundían
+a las políticas amplias — de ahí salía un 3 % que no comparaba lo que decía comparar.
+Sobre lo que sí está medido, el margen es **35 % contra 24 %**: bastante más estrecho.
+
+Lo que aguanta intacto es lo otro, que además es lo que importa: **de las 109 páginas con
+ganancia medida, las 26 que aportan algo caen todas dentro de las 75 de `medido`**.
+Ninguna se escapa.
 
 ### 2. Lo que decide el resultado es cómo se fabricó el PDF
 
@@ -115,9 +126,18 @@ detectores baratos y los dos fallan: la tasa de *stopwords* y un modelo de n-gra
 caracteres puntúan *Attention Is All You Need* como el peor texto del corpus, siendo
 impecable, porque confunden idioma y dominio con calidad de extracción.
 
-La vía que sí funciona es usar el OCR como árbitro: renderizar la página, pasarle OCR
-y comparar con la capa de texto. Si las dos lecturas discrepan mucho, una está mal.
-Está pendiente de implementar.
+> **Estos dos detectores fueron una prueba exploratoria y su código no está en el repo.**
+> Los medí en un cuaderno suelto mientras montaba el corpus y no los conservé como
+> script reproducible. Lo digo aquí porque el resto de cifras de este README sí salen de
+> ficheros de medición versionados, y la diferencia importa.
+
+La vía que creo que funciona es usar el OCR como árbitro: renderizar la página, pasarle
+OCR y comparar con la capa de texto que ya traía. Si las dos lecturas discrepan mucho,
+una de las dos está mal y la página se marca. No necesita diccionario ni entrenamiento y
+sería igual de válida en español, en inglés o en la tipografía de 1750.
+
+**Está pendiente de implementar. Es lo siguiente que voy a hacer en este repo**, y hasta
+que haya números medidos es una hipótesis razonada, no un resultado.
 
 ## Ver el pipeline funcionando
 
