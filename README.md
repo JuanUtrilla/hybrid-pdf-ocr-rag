@@ -8,7 +8,8 @@ todas las páginas sale caro.
 
 En este proyecto medí en qué páginas merece la pena usarlo y qué cambia después en un
 asistente de IA que responde preguntas sobre esos documentos (lo que se suele llamar un
-RAG). Lo probé con 2.382 páginas de 13 documentos públicos.
+RAG). Lo probé con 2.382 páginas de 13 documentos públicos. El asistente está montado con
+LangChain y LangGraph y usa un modelo pequeño que funciona en el propio ordenador.
 
 ## Qué páginas pasar por OCR
 
@@ -83,12 +84,18 @@ uno de los dos está mal.
 
 ## Cómo está montado
 
-Cada página pasa por un grafo de LangGraph (`scripts/ingest_graph.py`) que la descarta si
-está en blanco, se queda con el texto nativo si no hace falta OCR, o pasa el OCR y se
+El proyecto usa LangGraph para el orden de los pasos y LangChain para las piezas.
+
+Con LangGraph, cada página pasa por un grafo (`scripts/ingest_graph.py`) que la descarta
+si está en blanco, se queda con el texto nativo si no hace falta OCR, o pasa el OCR y se
 queda con la versión que tenga más texto. Las preguntas pasan por otro grafo
 (`scripts/qa_graph.py`) que busca los fragmentos, pide la respuesta al modelo y traduce
 cada cita al documento, la página y el método del que salió, para saber si un dato vino
 del texto nativo o del OCR.
+
+Con LangChain están hechas las piezas de ese segundo grafo: el buscador, las instrucciones
+que recibe el modelo y la conexión con el modelo, que se puede cambiar por otro sin tocar
+el resto del código.
 
 El modelo se cambia con la variable `RAG_MODEL` (por defecto `ollama:qwen2.5:3b`). Las
 cifras de arriba son solo las de ese modelo.
@@ -113,7 +120,7 @@ ollama pull qwen2.5:3b                         # con `ollama serve` en marcha
 python scripts/answer_eval.py                  # respuestas del modelo
 ```
 
-Las respuestas se midieron con Ollama 0.33.3 en un portátil con una RTX 5080. Los PDF no
+Las respuestas se midieron con Ollama 0.33.3. Los PDF no
 se suben al repo porque pertenecen a sus autores; `fetch_corpus.py` los descarga de su web
 original y comprueba con una huella (SHA-256) que son los mismos. Las direcciones están en
 `corpus/corpus.json`.
@@ -132,5 +139,5 @@ original y comprueba con una huella (SHA-256) que son los mismos. Las direccione
 | `ingest_graph.py` | Grafo que decide qué hacer con cada página (LangGraph) |
 | `extract_corpus.py` | Pasa cada página por ese grafo y guarda el texto y de dónde salió |
 | `rag_eval.py` | Mide si se encuentra la página y si los fragmentos traen la respuesta |
-| `qa_graph.py` | Grafo de pregunta y respuesta: buscar, responder y citar |
+| `qa_graph.py` | Grafo de pregunta y respuesta: buscar, responder y citar (LangGraph y LangChain) |
 | `answer_eval.py` | Mide las respuestas del modelo con y sin OCR |
