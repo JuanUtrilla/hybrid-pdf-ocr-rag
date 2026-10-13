@@ -1,7 +1,7 @@
 # Los PDF del corpus no se versionan: se descargan con scripts/fetch_corpus.py
 data/pdf/*.pdf
 
-# Indices y artefactos pesados
+# Índices y artefactos pesados
 data/index/
 *.joblib
 *.npz
@@ -11,17 +11,17 @@ __pycache__/
 .venv/
 .ipynb_checkpoints/
 
-# Texto extraido de los documentos del corpus: pertenece a sus autores.
+# Texto extraído de los documentos del corpus: pertenece a sus autores.
 # Se regenera en local con extract_corpus.py y no se redistribuye.
 out/pages/
 out/native/
 
-# Mediciones sobre material privado que no forma parte del corpus publico
+# Mediciones sobre material privado que no forma parte del corpus público
 out/apuntes/
 out/yield_apuntes/
 out/qgis_profile.log
 
-# Cache de render y OCR: contiene la pagina completa y su texto, se regenera
+# Caché de render y OCR: contiene la página completa y su texto, se regenera
 out/cache/
 
 # Visualizaciones para divulgación: se mantienen en local, fuera del repo.

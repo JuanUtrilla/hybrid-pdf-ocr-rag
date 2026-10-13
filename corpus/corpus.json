@@ -1,11 +1,11 @@
 {
-  "descripcion": "Corpus publico de evaluacion. Los PDF no se versionan: se descargan por URL.",
+  "descripcion": "Corpus público de evaluación. Los PDF no se versionan: se descargan por URL.",
   "documentos": [
     {"id": "ipcc_ar4_syr_es", "grupo": "maquetado", "idioma": "es",
-     "titulo": "IPCC AR4 - Cambio climatico 2007: Informe de sintesis",
+     "titulo": "IPCC AR4 - Cambio climático 2007: Informe de síntesis",
      "url": "https://www.ipcc.ch/site/assets/uploads/2018/02/ar4_syr_sp.pdf"},
     {"id": "boe_constitucion", "grupo": "maquetado", "idioma": "es",
-     "titulo": "Constitucion Espanola (texto consolidado, BOE)",
+     "titulo": "Constitución Española (texto consolidado, BOE)",
      "url": "https://www.boe.es/buscar/pdf/1978/BOE-A-1978-31229-consolidado.pdf"},
     {"id": "arxiv_attention", "grupo": "maquetado", "idioma": "en",
      "titulo": "Attention Is All You Need (arXiv:1706.03762)",
