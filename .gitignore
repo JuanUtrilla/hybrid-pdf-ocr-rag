@@ -23,3 +23,12 @@ out/qgis_profile.log
 
 # Cache de render y OCR: contiene la pagina completa y su texto, se regenera
 out/cache/
+
+# Visualizaciones para divulgación: se mantienen en local, fuera del repo.
+# Solo se versionan las dos figuras que usa el README.
+scripts/viz_*.py
+scripts/make_figure.py
+scripts/cache_ocr.py
+out/figuras/*
+!out/figuras/contraste_ocr.png
+!out/figuras/capa_corrupta.png

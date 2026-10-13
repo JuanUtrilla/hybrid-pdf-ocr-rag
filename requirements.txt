@@ -1,7 +1,7 @@
 # Descarga del corpus
 httpx>=0.27,<1.0
 
-# Extraccion de texto nativo y render de pagina
+# Extracción de texto nativo y render de página
 pdfplumber>=0.11,<0.12
 pypdfium2>=4.30
 
@@ -9,14 +9,14 @@ pypdfium2>=4.30
 rapidocr-onnxruntime>=1.4,<2.0
 onnxruntime>=1.17
 
-# Imagen y calculo
+# Imagen y cálculo
 opencv-python>=4.9
 numpy>=1.26
 
-# Retrieval e indice
+# Retrieval e índice
 scikit-learn>=1.4
-joblib>=1.4
 
-# Embeddings y generacion local
-torch>=2.4
-transformers>=4.44
+# Grafos de ingesta y de pregunta-respuesta, y LLM local con Ollama
+langchain>=1.4,<2
+langchain-ollama>=1.1,<2
+langgraph>=1.0,<2

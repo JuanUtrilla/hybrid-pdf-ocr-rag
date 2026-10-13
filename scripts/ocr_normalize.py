@@ -1,17 +1,9 @@
 #!/usr/bin/env python3
-"""Reconstruye los espacios que el OCR pierde en capturas de pantalla.
+"""Reconstruye los espacios que el OCR pierde en capturas (`Ihopethisemailfindsyouwell`).
 
-El reconocedor devuelve cadenas como `Ihopethisemailfindsyouwell`. Indexar eso
-produce un embedding sin relacion con el texto real y hace irrecuperable la
-pagina. La reconstruccion no necesita un diccionario externo: el propio corpus
-ya aporta uno, porque las paginas de texto nativo del mismo documento estan
-bien segmentadas.
-
-Segmentacion por programacion dinamica sobre el vocabulario observado,
-puntuando cada particion por la frecuencia de sus palabras.
+Segmenta por programación dinámica con el vocabulario de las páginas nativas del
+propio corpus, puntuando cada partición por la frecuencia de sus palabras.
 """
-
-from __future__ import annotations
 
 import argparse
 import json
@@ -25,12 +17,7 @@ GLUED = re.compile(r"[A-Za-z]{12,}")
 
 
 def build_vocabulary(texts: list[str], wordlist: Path | None = None) -> Counter:
-    """Frecuencias del propio corpus, con una lista general como respaldo.
-
-    El corpus aporta el vocabulario de dominio, que es el que mas importa. La
-    lista general cubre el lenguaje corriente que aparece dentro de las
-    capturas y que el corpus no contiene.
-    """
+    """Frecuencias del corpus, con una lista de palabras general como respaldo."""
     vocab: Counter = Counter()
     for text in texts:
         vocab.update(w.lower() for w in re.findall(r"[A-Za-z\']+", text))
@@ -38,7 +25,7 @@ def build_vocabulary(texts: list[str], wordlist: Path | None = None) -> Counter:
         for line in wordlist.read_text(encoding="utf-8", errors="ignore").splitlines():
             word = line.strip().lower()
             if word.isalpha() and len(word) > 1:
-                vocab[word] += 1          # peso minimo: solo evita el penalizador
+                vocab[word] += 1          # peso mínimo: solo evita la penalización
     return vocab
 
 

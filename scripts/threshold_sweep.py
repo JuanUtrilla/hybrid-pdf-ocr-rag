@@ -1,19 +1,15 @@
 #!/usr/bin/env python3
-"""Barre el umbral de caracteres del triaje sobre los perfiles ya calculados.
-
-Responde a la pregunta que ninguna de las implementaciones previas medía:
-cuantas paginas manda a OCR cada umbral, y cuantas de esas paginas estan
-realmente en blanco.
-"""
-
-from __future__ import annotations
+"""Barre el umbral de caracteres del triaje: cuántas páginas manda a OCR y cuántas están en blanco."""
 
 import argparse
 import glob
 import json
+import sys
 from pathlib import Path
 
-BLANK_INK = 0.005
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from triage import BLANK_INK  # noqa: E402
+
 THRESHOLDS = [10, 40, 80, 150, 300, 600, 1000]
 
 
@@ -51,7 +47,7 @@ def main() -> None:
     print("-" * len(head))
     print("TOTAL".ljust(20) + str(n).rjust(6)
           + "".join(f"{totals[t][0]}/{totals[t][1]}".rjust(11) for t in THRESHOLDS))
-    print("\nCada celda es paginas_enviadas_a_OCR / de_esas_las_que_no_estan_en_blanco.")
+    print("\nCada celda: páginas enviadas a OCR / de esas, las que no están en blanco.")
 
 
 if __name__ == "__main__":

@@ -10,5 +10,35 @@
     "sha256": "4229659ac23222fc03c6ce884639c4216c1b7d3ba511994a06759bf442491f95",
     "bytes": 822017,
     "url": "https://www.boe.es/gazeta/dias/1750/01/06/pdfs/GMD-1750-1.pdf"
+  },
+  {
+    "id": "cs224n_l01",
+    "sha256": "6ab73fa075da80ebc795ce63a6cfe55a17af712557b46b7d8857bb74196ebd55",
+    "bytes": 4413351,
+    "url": "https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1244/slides/cs224n-2024-lecture01-wordvecs1.pdf"
+  },
+  {
+    "id": "cs224n_l08",
+    "sha256": "030c76e50372856d765ea7869e0d2786ee78581a60eb8c5255c8a8ea2ee8b9a8",
+    "bytes": 6009614,
+    "url": "https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1244/slides/cs224n-2024-lecture08-transformers.pdf"
+  },
+  {
+    "id": "cs231n_l5",
+    "sha256": "f7c85b22980ecb9278291acb7f19ce0ff8cec9d4182fdbb753dbf0334ef8b15f",
+    "bytes": 15987168,
+    "url": "https://cs231n.stanford.edu/slides/2024/lecture_5.pdf"
+  },
+  {
+    "id": "cs231n_l9",
+    "sha256": "d16279046caf29686633f96ec647ff5df3f5ab9c01c87329edcd882601665d99",
+    "bytes": 10026401,
+    "url": "https://cs231n.stanford.edu/slides/2024/lecture_9.pdf"
+  },
+  {
+    "id": "cs231n_l11",
+    "sha256": "d1b78df2152b0f5d1644081e3bb5ce9373a905adb1e0497c7f8ce89089a266db",
+    "bytes": 43816682,
+    "url": "https://cs231n.stanford.edu/slides/2024/lecture_11.pdf"
   }
 ]

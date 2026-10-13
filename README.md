@@ -1,214 +1,239 @@
-# ¿Cuándo merece la pena el OCR en un pipeline de RAG?
+# Cuándo hace falta leer las imágenes de un PDF
 
-Casi todos los tutoriales de RAG sobre PDF empiezan igual: extraer el texto con
-`pdfplumber` o PyMuPDF, trocear, indexar. Y casi todos añaden, como nota al pie, que
-si el PDF es un escaneo "habrá que meter OCR". Nadie dice **cuándo**.
+Muchos PDF tienen parte del contenido dentro de imágenes: capturas de pantalla, gráficas,
+tablas pegadas como foto. Un programa que lee el PDF ve el texto normal, pero lo que hay
+dentro de esas imágenes no lo ve. Para leerlo hace falta OCR, que reconoce las letras en
+la imagen como lo haría una persona. El problema es que el OCR es lento, y pasarlo por
+todas las páginas sale caro.
 
-Aquí está medido. 2.382 páginas de 13 documentos públicos, perfiladas una a una,
-varias políticas de triaje comparadas entre sí y, al final, una evaluación de qué le pasa
-a un RAG cuando se le quita el OCR.
+En este proyecto medí en qué páginas merece la pena usarlo y qué cambia después en un
+asistente de IA que responde preguntas sobre esos documentos (lo que se suele llamar un
+RAG). Lo probé con 2.382 páginas de 13 documentos públicos.
 
-El resultado corto: **lo que decide si el OCR sirve es que el contenido esté
-rasterizado**. El tipo de documento —académico, oficial, docente— da igual. En un informe
-maquetado el OCR no aporta absolutamente nada. En diapositivas de clase decide si el
-sistema puede responder o no.
+Lo que salió:
 
-## Los tres resultados
+- Que haga falta OCR no depende del tipo de documento, sino de cómo se fabricó el PDF.
+  En un informe maquetado no aporta nada. En unas diapositivas de clase llenas de
+  capturas, sí.
+- Bastan tres comprobaciones sencillas para elegir las páginas: que tengan poco texto,
+  que no estén en blanco y que tengan alguna imagen. Con eso se encuentran las mismas
+  páginas útiles que con la regla habitual, pasando el OCR 12 veces menos.
+- Sin OCR, el asistente encuentra la diapositiva correcta (por el título), pero no la
+  respuesta, que está en la imagen. Con OCR, la respuesta le llega en 7 de 8 preguntas,
+  frente a 1 de 8 sin él.
 
-### 1. El umbral de caracteres, el número mágico que nadie mide
+El resto del documento entra en detalle. Algunos términos que aparecen:
 
-La regla habitual es "si la página tiene menos de N caracteres nativos, pásale OCR".
-Con distintos valores de N sobre el mismo corpus:
+| Término | Qué es |
+|---|---|
+| Texto nativo | El texto que el PDF ya trae y que se puede copiar y pegar |
+| OCR | Reconocer el texto que hay dentro de una imagen |
+| Fragmento | Trozo de unas 180 palabras en el que se divide cada página para buscar en él |
+| Buscador | La parte que, dada una pregunta, encuentra los fragmentos más parecidos |
+| LLM | El modelo de lenguaje que redacta la respuesta a partir de esos fragmentos |
 
-| Política | Págs a OCR | % del corpus | En blanco | Con ganancia medida | Cobertura de medición | Precisión sobre lo medido |
+## 1. La regla de los caracteres
+
+La regla habitual es "si la página tiene menos de N caracteres de texto nativo, pásale
+OCR". Con distintos valores de N sobre las mismas páginas:
+
+| Regla | Páginas a OCR | % del total | En blanco | Con mejora medida | Páginas medidas | Acierto sobre lo medido |
 |---|---:|---:|---:|---:|---:|---:|
-| `native_chars < 10` | 11 | 0,5 % | 8 | 1 de 3 | 27 % | 33 % |
-| `native_chars < 80` | 48 | 2,0 % | 21 | 10 de 27 | 56 % | 37 % |
-| `native_chars < 1000` | 929 | 39,0 % | 21 | 26 de 109 | 12 % | 24 % |
-| **medido** | **75** | **3,1 %** | **0** | **26 de 75** | **100 %** | **35 %** |
+| menos de 10 caracteres | 11 | 0,5 % | 8 | 1 de 3 | 27 % | 33 % |
+| menos de 80 caracteres | 48 | 2,0 % | 21 | 10 de 27 | 56 % | 37 % |
+| menos de 1000 caracteres | 929 | 39,0 % | 21 | 26 de 109 | 12 % | 24 % |
+| `medido` | 75 | 3,1 % | 0 | 26 de 75 | 100 % | 35 % |
 
-Los tres primeros son umbrales reales que yo mismo tenía escritos en tres sitios
-distintos del mismo proyecto, sin ninguna medición detrás.
+Esos tres umbrales los tenía yo escritos en tres sitios distintos del mismo proyecto, sin
+ninguna medición detrás.
 
-La política `medido` exige tres condiciones en vez de una: poco texto nativo, **tinta
-en el render** y **al menos una imagen embebida**. Encuentra las mismas 26 páginas
-útiles que el umbral de 1000 llamando al OCR **12 veces menos**, y sin renderizar ni
-una sola página en blanco.
+La regla `medido` pide tres cosas: poco texto nativo, algo de tinta al dibujar la
+página y al menos una imagen. Encuentra las mismas 26 páginas en las que el OCR aporta
+algo que la regla de 1000 caracteres, pasando el OCR 12 veces menos, y no gasta tiempo en
+ninguna página en blanco.
 
-Las dos señales nuevas atacan cada una un modo de fallo:
+- Mirar la tinta descarta los folios vacíos. Con la regla de 10 caracteres, 8 de las 11
+  páginas que van a OCR están en blanco.
+- Mirar si hay imágenes evita mandar a OCR portadas con poco texto que ya se leía bien.
 
-- `ink_coverage` descarta folios vacíos. Un umbral de 10 caracteres dispara 11 veces
-  en este corpus y 8 son páginas literalmente en blanco.
-- `n_images` distingue "texto vectorial escaso" de "contenido dentro de una imagen".
-  Sin ella se manda a OCR portadillas cuyo titular `pdfplumber` ya había leído.
+Ojo con la última columna: solo sé si el OCR aportó algo en las páginas a las que se lo
+pasé. Con la regla de 1000 caracteres son 109 de 929; las otras 820 no se midieron, así
+que el porcentaje se calcula sobre las medidas. Una versión anterior lo calculaba sobre
+todas y daba un 3 % engañoso. Lo que no cambia es que las 26 páginas con mejora caen
+todas dentro de las 75 de `medido`.
 
-**Una advertencia sobre esta tabla, porque la versión anterior la contaba mal.** La
-ganancia del OCR sólo está medida en 109 de las 929 páginas que dispara el umbral de
-1000: a las otras 820 nunca se les pasó OCR. Cuando la precisión se calculaba sobre todo
-lo que dispara, esas 820 entraban en el denominador con ganancia 0 por defecto y hundían
-a las políticas amplias — de ahí salía un 3 % que no comparaba lo que decía comparar.
-Sobre lo que sí está medido, el margen es **35 % contra 24 %**: bastante más estrecho.
+## 2. Lo que decide es cómo se fabricó el PDF
 
-Lo que aguanta intacto es lo otro, que además es lo que importa: **de las 109 páginas con
-ganancia medida, las 26 que aportan algo caen todas dentro de las 75 de `medido`**.
-Ninguna se escapa.
+El mismo código sobre tres grupos de documentos:
 
-### 2. Lo que decide el resultado es cómo se fabricó el PDF
-
-Mismo código, mismo umbral, cuatro tipos de documento:
-
-| Corpus | Págs | A OCR | Nativo → OCR | Págs con ganancia |
+| Documentos | Páginas | A OCR | Texto nativo → con OCR | Páginas con mejora |
 |---|---:|---:|---:|---:|
-| IPCC AR4 (ES) + manual de R | 217 | 2,8 % | **×1,0** | 0 |
+| Informe del IPCC (ES) + manual de R | 217 | 2,8 % | ×1,0 | 0 |
 | Manual de QGIS | 1.645 | 1,2 % | ×4,6 | 14 |
-| Diapositivas Stanford CS224n/CS231n | 438 | 19,2 % | ×1,6 | 12 |
+| Diapositivas de Stanford (CS224n y CS231n) | 438 | 19,2 % | ×1,6 | 12 |
 
-En documentos generados desde LaTeX o desde un maquetador, el OCR reproduce
-exactamente lo que ya había: ×1,0. En manuales con capturas de pantalla y en
-transparencias de clase, recupera contenido que de otro modo no existe.
+En documentos generados con LaTeX o con un programa de maquetación, el OCR devuelve el
+mismo texto que ya había. En manuales con capturas de pantalla y en diapositivas recupera
+texto que de otra forma no existe.
 
-El ejemplo canónico está en `out/figuras/`: la diapositiva 15 de CS224n Lecture 1 se
-titula *"ChatGPT, GPT-4, and more"* y es entera capturas de conversaciones.
-`pdfplumber` extrae **24 caracteres** — el título. El OCR extrae **1.134**
-(`out/yield/cs224n_l01.jsonl`, `gain_chars: 1110`); con los espacios reconstruidos,
-1.206.
+![El mismo PDF leído sin OCR y con OCR](out/figuras/contraste_ocr.png)
 
-### 3. Sin OCR el RAG no responde
+La diapositiva 15 de la primera clase de CS224n es entera capturas de conversaciones con
+ChatGPT. Sin OCR se leen 24 caracteres, solo el título. Con OCR, 1.134
+(`out/yield/cs224n_l01.jsonl`), y 1.206 después de arreglar los espacios.
 
-Ocho preguntas cuya respuesta vive dentro de una imagen: una tabla de perplejidad, los
-tiempos de inferencia de Faster R-CNN, el número de parámetros de Switch-C. Mismo
-corpus, mismo retriever, mismos chunks salvo los que aporta el OCR:
+## 3. Qué cambia en las respuestas del asistente
 
-| Índice | Chunks | Recall@5 |
+Preparé ocho preguntas sobre las diapositivas cuya respuesta está dentro de una imagen:
+una tabla de resultados, una gráfica de tiempos, el tamaño de un modelo... Cada una lleva
+la respuesta correcta, leída en la diapositiva, y las palabras o cifras que tiene que
+contener un texto para contar como acierto (`corpus/preguntas.json`).
+
+Comparo dos versiones que solo se diferencian en las páginas que la regla manda a OCR: en
+una esas páginas llevan su texto nativo y en la otra, el texto del OCR. El buscador
+devuelve los 5 fragmentos más parecidos a la pregunta, y el LLM es `qwen2.5:3b`, un
+modelo pequeño que funciona en el propio ordenador con Ollama. Mido tres cosas por
+separado:
+
+| | Sin OCR | Con OCR |
 |---|---:|---:|
-| Sin los chunks de páginas OCR | 410 | **0,00** (0/8) |
-| Híbrido con OCR | 440 | **0,88** (7/8) |
+| La página correcta está entre los 5 resultados | 7/8 | 7/8 |
+| Esos fragmentos contienen la respuesta | 1/8 | 7/8 |
+| El LLM responde bien | 1/8 | 2/8 |
+| El LLM cita la página correcta | 1/8 | 4/8 |
 
-**Un 7 % más de chunks lleva el recall@5 de cero a 0,88.** Ese 7 % es justo lo que el
-triaje decide, y por eso el triaje importa.
+Sin OCR, el buscador encuentra la diapositiva igual de bien, porque el título está en el
+texto nativo. Pero al modelo solo le llega el título y responde "no lo sé" en siete de
+ocho preguntas. La que acierta es q04, cuya respuesta también está en el texto nativo. Si
+solo hubiera mirado la primera fila, habría concluido que el OCR no sirve para nada.
 
-Con una advertencia sobre el 0,00, que conviene hacer yo antes que otro: el índice de
-contraste **elimina esas páginas enteras**, no sólo el texto que aportó el OCR
-(`rag_eval.py:37` les asigna cadena vacía). Las ocho páginas oro tenían entre 37 y 148
-caracteres de texto nativo —el titular de la transparencia—, así que ese cero es un
-**suelo construido, no medido**. El baseline honesto es `pdfplumber` puro y está pendiente
-de ejecutar. Y aquí no hay generación: `rag_eval.py` monta TF-IDF y coseno, así que la
-métrica es recuperación, no respuesta.
+Con OCR la respuesta llega en 7 de 8 casos, pero el modelo, que es pequeño, solo la
+aprovecha en 2: q04 y la de DETR (q06). En q01 da bien una de las dos cifras que se
+piden y se inventa la otra (toma el 12,7 de la columna de al lado). En la gráfica de
+Faster R-CNN, en q05 y en q08 dice no saberlo aunque tiene el dato delante, y en q07
+contesta solo con las referencias. Cita la página correcta más veces de las que acierta:
+encuentra el sitio, pero no siempre lo lee bien. q03 falla en las dos versiones porque
+esa diapositiva se titula "Visualizing and Understanding" y el buscador no la encuentra.
 
-## Un cuarto hallazgo: el OCR también estropea
+Cuando una pregunta pide comparar dos cifras, la respuesta tiene que traer las dos para
+contar como acierto. El modelo no da exactamente la misma respuesta cada vez, así que
+`answer_eval.py` repite cada pregunta cinco veces. Las cifras de la tabla salieron
+iguales en ocho ejecuciones, cinco seguidas y tres después de reiniciar el modelo. La
+primera de todas fue distinta: en q01 dio bien las dos cifras.
 
-El reconocedor pierde los espacios en capturas con tipografía apretada y devuelve
-`Ihopethisemailfindsyouwell`. Indexar eso produce un embedding sin relación con el
-texto real. `scripts/ocr_normalize.py` los reconstruye con programación dinámica sobre
-un vocabulario que **sale del propio corpus**: las páginas de texto nativo del mismo
-documento ya están bien segmentadas y sirven de diccionario de dominio, con una lista
-de palabras general como respaldo.
+Son solo ocho preguntas, así que cada una cuenta un 12,5 %. No ajusté las instrucciones
+del modelo para que acertara estas preguntas: son las primeras que escribí y están en
+`scripts/qa_graph.py`. Las respuestas completas, con sus citas, están en
+`out/rag_eval/respuestas.json`.
+
+La primera versión de este README comparaba con otra versión que quitaba esas páginas
+enteras, y de ahí salía que sin OCR no se encontraba ninguna página (0 de 8, frente a 7
+de 8). Ese 0 no era una medida real, porque sin OCR las páginas existen y tienen su
+título. `rag_eval.py` sigue calculando esa versión (`sin_paginas_ocr`) para poder
+compararlas.
+
+## 4. El OCR también estropea
+
+En capturas con letra muy apretada, el OCR pierde los espacios y devuelve cosas como
+`Ihopethisemailfindsyouwell`, que luego no se parece a nada al buscar.
+`scripts/ocr_normalize.py` vuelve a separar las palabras usando las palabras que ya
+aparecen en el texto nativo del mismo documento, con un diccionario general de respaldo.
 
 ```
 antes : thisimageisthatamanisironingclothesonanironingboard
 ahora : this image is that a man is ironing clothes on an ironing board
 ```
 
-## Y un problema que este triaje no resuelve
+## 5. Un problema que esto no resuelve
 
-El corpus incluye tres Gacetas de Madrid (1750, 1885 y 1936). El BOE ya les ha pasado
-OCR, así que traen capa de texto —12.818 caracteres de media por página en la edición de
-1885— y **no disparan a ningún umbral**. Pero esa capa está corrupta:
+Entre los documentos hay tres Gacetas de Madrid (1750, 1885 y 1936). El BOE ya les pasó
+OCR hace años, así que traen texto (12.818 caracteres por página de media en la de 1885)
+y ninguna regla las manda a OCR. Pero ese texto está lleno de errores:
+
+![Texto con errores en la Gaceta de Madrid de 1750](out/figuras/capa_corrupta.png)
+
+Las reglas de arriba miran cuánto texto hay, y aquí el problema es que está mal. Probé
+dos formas rápidas de detectarlo (contar palabras muy comunes y un modelo estadístico de
+letras) y las dos dijeron que el peor texto de todos era *Attention Is All You Need*,
+que está perfecto: confundían inglés y vocabulario técnico con texto roto. Fue una
+prueba rápida en un cuaderno aparte y ese código no está en el repo; el resto de cifras
+de este README sí salen de ficheros que están aquí.
+
+La idea que quiero probar es pasar el OCR igualmente y compararlo con el texto que ya
+traía la página. Si los dos se parecen poco, uno de los dos está mal. De momento es solo
+una idea, sin números.
+
+## Cómo está montado
+
+Cada página pasa por un grafo de LangGraph (`scripts/ingest_graph.py`) que decide qué
+hacer con ella:
 
 ```
-Vierta 6. de Diciembre de i 749      (era: Viena 6. de Diciembre de 1749)
-paííáron fusMageftades                (era: pasaron sus Majestades)
-Igíefia de la Cafa Profefla           (era: Iglesia de la Casa Profesa)
+texto nativo ─┬─ página en blanco ─→ se descarta (EMPTY)
+              ├─ no hace falta OCR ─→ se queda el texto nativo (PLUMBER)
+              └─ hace falta OCR ────→ OCR, y se queda con el que tenga más texto (OCR o PLUMBER)
 ```
 
-El triaje mide **cantidad** de texto y el problema es de **calidad**. Probé dos
-detectores baratos y los dos fallan: la tasa de *stopwords* y un modelo de n-gramas de
-caracteres puntúan *Attention Is All You Need* como el peor texto del corpus, siendo
-impecable, porque confunden idioma y dominio con calidad de extracción.
+Las preguntas pasan por otro grafo (`scripts/qa_graph.py`) con tres pasos: buscar los
+fragmentos (con LangChain), pedirle la respuesta al modelo y traducir cada referencia
+`[n]` de la respuesta al documento, la página y el método del que salió. Así se puede ver
+si un dato vino del texto nativo o del OCR.
 
-> **Estos dos detectores fueron una prueba exploratoria y su código no está en el repo.**
-> Los medí en un cuaderno suelto mientras montaba el corpus y no los conservé como
-> script reproducible. Lo digo aquí porque el resto de cifras de este README sí salen de
-> ficheros de medición versionados, y la diferencia importa.
-
-La vía que creo que funciona es usar el OCR como árbitro: renderizar la página, pasarle
-OCR y comparar con la capa de texto que ya traía. Si las dos lecturas discrepan mucho,
-una de las dos está mal y la página se marca. No necesita diccionario ni entrenamiento y
-sería igual de válida en español, en inglés o en la tipografía de 1750.
-
-**Está pendiente de implementar. Es lo siguiente que voy a hacer en este repo**, y hasta
-que haya números medidos es una hipótesis razonada, no un resultado.
-
-## Ver el pipeline funcionando
-
-`scripts/viz_animation.py` genera una animación de 18 segundos que recorre el pipeline
-entero sobre una página real: detección de cajas, reconocimiento, reconstrucción de
-espacios, chunking con procedencia y recuperación final.
-
-![Pipeline completo](out/figuras/pipeline.gif)
-
-Los seis pasos están también como láminas sueltas en `out/figuras/paso_*.png`, y
-agrupados en `pipeline_laminas.pdf` para leerlos con calma. Todas las visualizaciones se
-generan desde el resultado cacheado del OCR, así que no hay números escritos a mano:
-cada cifra que aparece sale de los ficheros de medición.
-
-```bash
-python scripts/cache_ocr.py --pdf data/pdf/cs224n_l01.pdf --page 15 --out-dir out/cache
-PYTHONPATH=scripts python scripts/viz_animation.py
-PYTHONPATH=scripts python scripts/viz_contraste.py
-PYTHONPATH=scripts python scripts/viz_capa_corrupta.py
-```
+El modelo se cambia con la variable `RAG_MODEL` (por defecto `ollama:qwen2.5:3b`). Se
+pueden usar otros proveedores, pero las cifras de arriba son solo las de ese modelo.
 
 ## Cómo reproducirlo
 
 ```bash
 pip install -r requirements.txt
-python scripts/fetch_corpus.py                     # descarga los 13 PDF y su manifiesto
-python scripts/page_profile.py --pdf data/pdf/cs224n_l01.pdf \
-       --doc-id cs224n_l01 --out out/profiles/cs224n_l01.jsonl
-python scripts/triage.py --profiles "out/profiles/*.jsonl"
-python scripts/extract_corpus.py --pdf data/pdf/cs224n_l01.pdf \
-       --profile out/profiles/cs224n_l01.jsonl --out out/pages/cs224n_l01.jsonl
-python scripts/rag_eval.py
+python scripts/fetch_corpus.py                 # descarga los 13 PDF y guarda sus huellas
+
+for d in cs224n_l01 cs224n_l08 cs231n_l5 cs231n_l9 cs231n_l11; do
+  python scripts/page_profile.py --pdf data/pdf/$d.pdf --doc-id $d --out out/slides/$d.jsonl
+  python scripts/extract_corpus.py --pdf data/pdf/$d.pdf --profile out/slides/$d.jsonl \
+         --out out/pages/$d.jsonl
+done
+
+python scripts/triage.py --profiles "out/profiles/*.jsonl" "out/slides/*.jsonl" \
+       --yield-files "out/yield/*.jsonl" "out/yield_oficial/*.jsonl"
+python scripts/rag_eval.py                     # página correcta y respuesta en los fragmentos
+
+ollama pull qwen2.5:3b                         # con `ollama serve` en marcha
+python scripts/answer_eval.py                  # respuestas del modelo
 ```
 
-Los PDF **no se versionan**: pertenecen a sus autores y aquí solo se usan como material
-de medida. `scripts/fetch_corpus.py` los descarga de su fuente original y registra el
-SHA-256 de cada uno.
+Las cifras de la sección 3 se midieron con Ollama 0.33.3 en un portátil con una RTX
+5080; cada respuesta tarda menos de medio segundo.
+
+Los PDF no se suben al repo porque pertenecen a sus autores; aquí solo se usan para
+medir. `fetch_corpus.py` los descarga de su web original y guarda una huella (SHA-256)
+de cada uno para comprobar que son los mismos.
 
 ## Los scripts
 
 | Script | Qué hace |
 |---|---|
-| `fetch_corpus.py` | Descarga el corpus y escribe el manifiesto con hashes |
-| `page_profile.py` | Perfila cada página: caracteres nativos, imágenes, tinta, señales de calidad |
-| `triage.py` | Define y compara políticas de triaje sobre los perfiles |
-| `ocr_yield.py` | Mide cuánto texto añade realmente el OCR en las páginas que dispara |
-| `hybrid_pdf_extract.py` | Extracción híbrida página a página con RapidOCR |
-| `ocr_normalize.py` | Reconstruye los espacios que el OCR pierde |
-| `extract_corpus.py` | Aplica la política medida y emite el texto con su procedencia |
-| `rag_eval.py` | Construye los dos índices y mide el impacto del OCR sobre el recall |
-| `make_figure.py` | Figura antes/después de una página, en formato ancho |
-| `cache_ocr.py` | Cachea render, cajas de detección y texto de una página |
-| `viz_common.py` | Paleta, tipografía y primitivas de las visualizaciones |
-| `viz_animation.py` | Animación del pipeline completo, en GIF y MP4 |
-| `viz_contraste.py` | Lámina del contraste pdfplumber contra OCR |
-| `viz_capa_corrupta.py` | Lámina de la capa de texto corrupta |
-| `viz_laminas_pdf.py` | Agrupa las láminas en un único PDF |
-| `viz_portada.py` | Portada de la animación con el contraste principal |
+| `fetch_corpus.py` | Descarga los documentos y guarda sus huellas |
+| `page_profile.py` | Mide cada página: caracteres, imágenes, tinta y calidad del texto |
+| `triage.py` | Compara las reglas para decidir qué páginas pasar por OCR |
+| `threshold_sweep.py` | Prueba distintos umbrales de caracteres y cuenta las páginas en blanco |
+| `ocr_yield.py` | Mide cuánto texto añade el OCR en cada página |
+| `ocr_utils.py` | Funciones comunes del OCR: dibujar la página, ordenar el texto, confianza |
+| `ocr_normalize.py` | Vuelve a separar las palabras que el OCR junta |
+| `ingest_graph.py` | Grafo que decide qué hacer con cada página (LangGraph) |
+| `extract_corpus.py` | Pasa cada página por ese grafo y guarda el texto y de dónde salió |
+| `rag_eval.py` | Mide si se encuentra la página y si los fragmentos traen la respuesta |
+| `qa_graph.py` | Grafo de pregunta y respuesta: buscar, responder y citar |
+| `answer_eval.py` | Mide las respuestas del modelo con y sin OCR |
 
-Cada página extraída conserva su procedencia (`PLUMBER`, `OCR` o `EMPTY`), la
-confianza del OCR y las señales que motivaron la decisión. Sin ese rastro no se puede
-auditar por qué el RAG respondió lo que respondió.
-
-## Corpus
+## Documentos
 
 13 documentos públicos, 2.382 páginas, agrupados por cómo se fabricaron:
 
-- **Maquetado**: IPCC AR4 síntesis (ES), Constitución Española (BOE), *Attention Is All
-  You Need*, *An Introduction to R*.
-- **Manual con capturas**: QGIS 3.40 Desktop User Guide.
-- **Capa de OCR ajena**: Gaceta de Madrid de 1750, 1885 y 1936.
-- **Diapositivas**: Stanford CS224n lectures 1 y 8, CS231n lectures 5, 9 y 11.
+- Maquetados: informe de síntesis del IPCC AR4 (ES), Constitución Española (BOE),
+  *Attention Is All You Need* y *An Introduction to R*.
+- Manual con capturas: QGIS 3.40 Desktop User Guide.
+- Con un OCR antiguo ya hecho: Gaceta de Madrid de 1750, 1885 y 1936.
+- Diapositivas: Stanford CS224n clases 1 y 8 y CS231n clases 5, 9 y 11.
 
-Las fuentes exactas están en `corpus/corpus.json`.
+Las direcciones exactas están en `corpus/corpus.json`.

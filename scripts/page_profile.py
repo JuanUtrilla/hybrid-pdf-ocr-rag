@@ -1,23 +1,22 @@
 #!/usr/bin/env python3
-"""Perfila cada pagina de un PDF antes de decidir si necesita OCR.
+"""Perfila cada página de un PDF: caracteres nativos, imágenes, tinta del render y calidad del texto.
 
-Emite un JSONL con una fila por pagina: caracteres nativos, imagenes,
-cobertura de tinta del render y las senales de calidad del texto embebido.
-Sobre ese perfil se puede evaluar cualquier politica de triaje sin volver
-a abrir los PDF.
+El JSONL resultante permite evaluar cualquier política de triaje sin volver a abrir los PDF.
 """
-
-from __future__ import annotations
 
 import argparse
 import json
 import re
+import sys
 import unicodedata
 from pathlib import Path
 
 import numpy as np
 import pdfplumber
 import pypdfium2 as pdfium
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from triage import BLANK_INK  # noqa: E402
 
 INK_DPI = 110
 INK_THRESHOLD = 200
@@ -41,7 +40,7 @@ def text_signals(text: str) -> dict:
 
 
 def ink_coverage(pdf_doc: pdfium.PdfDocument, page_idx: int) -> float:
-    """Fraccion de pixeles oscuros del render. Distingue pagina en blanco de pagina con contenido."""
+    """Fracción de píxeles oscuros del render; separa las páginas en blanco."""
     bitmap = pdf_doc[page_idx].render(scale=INK_DPI / 72)
     gray = np.array(bitmap.to_pil().convert("L"))
     return float((gray < INK_THRESHOLD).mean())
@@ -68,7 +67,7 @@ def profile(pdf_path: Path, doc_id: str) -> list[dict]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Perfila paginas de PDF para el triaje de OCR")
+    parser = argparse.ArgumentParser(description="Perfila páginas de PDF para el triaje de OCR")
     parser.add_argument("--pdf", required=True)
     parser.add_argument("--doc-id", required=True)
     parser.add_argument("--out", required=True)
@@ -80,8 +79,8 @@ def main() -> None:
     with out.open("w", encoding="utf-8") as fh:
         for row in rows:
             fh.write(json.dumps(row, ensure_ascii=False) + "\n")
-    blank = sum(1 for r in rows if r["ink_coverage"] < 0.005)
-    print(f"{args.doc_id}: {len(rows)} paginas, {blank} en blanco -> {out}")
+    blank = sum(1 for r in rows if r["ink_coverage"] < BLANK_INK)
+    print(f"{args.doc_id}: {len(rows)} páginas, {blank} en blanco -> {out}")
 
 
 if __name__ == "__main__":

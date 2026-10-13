@@ -1,21 +1,118 @@
 {
-  "descripcion": "Preguntas de evaluacion. Cada una se responde con contenido que en el PDF vive dentro de una imagen, no en la capa de texto.",
+  "descripcion": "Preguntas de evaluación sobre diapositivas. En siete de las ocho la respuesta solo está dentro de una imagen; en q04 también está en la capa de texto. `respuesta` es la respuesta leída en la diapositiva y `evidencia`, los términos que tiene que contener el texto para contar como acierto.",
   "preguntas": [
-    {"id": "q01", "pregunta": "What test perplexity did the Transformer-ED get compared to seq2seq with attention for document generation?",
-     "doc_id": "cs224n_l08", "pagina_oro": 62, "terminos": ["perplexity", "transformer"]},
-    {"id": "q02", "pregunta": "How fast is Faster R-CNN at test time compared to the original R-CNN?",
-     "doc_id": "cs231n_l9", "pagina_oro": 88, "terminos": ["r-cnn", "speed"]},
-    {"id": "q03", "pregunta": "How many parameters does the Switch-C model have?",
-     "doc_id": "cs231n_l11", "pagina_oro": 3, "terminos": ["switch", "parameters"]},
-    {"id": "q04", "pregunta": "What did the paper Do Transformer Modifications Transfer conclude about most modifications?",
-     "doc_id": "cs224n_l08", "pagina_oro": 69, "terminos": ["modifications", "transformer"]},
-    {"id": "q05", "pregunta": "Which normalization methods are compared: batch norm, layer norm, instance norm and group norm?",
-     "doc_id": "cs231n_l11", "pagina_oro": 102, "terminos": ["norm"]},
-    {"id": "q06", "pregunta": "What loss does DETR use to match predicted boxes with ground truth?",
-     "doc_id": "cs231n_l9", "pagina_oro": 107, "terminos": ["detr", "matching"]},
-    {"id": "q07", "pregunta": "In the self-attention hypothetical example, which sentence is used about Stanford CS 224n?",
-     "doc_id": "cs224n_l08", "pagina_oro": 33, "terminos": ["attention", "stanford"]},
-    {"id": "q08", "pregunta": "What example of neural machine translation from Swahili to English is shown?",
-     "doc_id": "cs224n_l01", "pagina_oro": 11, "terminos": ["translation", "swahili"]}
+    {
+      "id": "q01",
+      "pregunta": "What test perplexity did the Transformer-ED get compared to seq2seq with attention for document generation?",
+      "doc_id": "cs224n_l08",
+      "pagina_oro": 62,
+      "terminos": [
+        "perplexity",
+        "transformer"
+      ],
+      "respuesta": "2.46645 frente a 5.04952 de seq2seq con atención",
+      "evidencia": [
+        "2.46645",
+        "5.04952"
+      ]
+    },
+    {
+      "id": "q02",
+      "pregunta": "How fast is Faster R-CNN at test time compared to the original R-CNN?",
+      "doc_id": "cs231n_l9",
+      "pagina_oro": 88,
+      "terminos": [
+        "r-cnn",
+        "speed"
+      ],
+      "respuesta": "0,2 s por imagen frente a 49 s de R-CNN",
+      "evidencia": [
+        "0.2",
+        "49"
+      ]
+    },
+    {
+      "id": "q03",
+      "pregunta": "How many parameters does the Switch-C model have?",
+      "doc_id": "cs231n_l11",
+      "pagina_oro": 3,
+      "terminos": [
+        "switch",
+        "parameters"
+      ],
+      "respuesta": "1,6 billones (1.6T)",
+      "evidencia": [
+        "1.6t"
+      ]
+    },
+    {
+      "id": "q04",
+      "pregunta": "What did the paper Do Transformer Modifications Transfer conclude about most modifications?",
+      "doc_id": "cs224n_l08",
+      "pagina_oro": 69,
+      "terminos": [
+        "modifications",
+        "transformer"
+      ],
+      "respuesta": "Que la mayoría de modificaciones no mejoran el rendimiento de forma significativa",
+      "evidencia": [
+        "do not meaningfully improve"
+      ]
+    },
+    {
+      "id": "q05",
+      "pregunta": "Which normalization methods are compared: batch norm, layer norm, instance norm and group norm?",
+      "doc_id": "cs231n_l11",
+      "pagina_oro": 102,
+      "terminos": [
+        "norm"
+      ],
+      "respuesta": "Batch norm, layer norm, instance norm y group norm",
+      "evidencia": [
+        "group norm"
+      ]
+    },
+    {
+      "id": "q06",
+      "pregunta": "What loss does DETR use to match predicted boxes with ground truth?",
+      "doc_id": "cs231n_l9",
+      "pagina_oro": 107,
+      "terminos": [
+        "detr",
+        "matching"
+      ],
+      "respuesta": "Una pérdida de emparejamiento bipartito (bipartite matching loss)",
+      "evidencia": [
+        "bipartite matching"
+      ]
+    },
+    {
+      "id": "q07",
+      "pregunta": "In the self-attention hypothetical example, which sentence is used about Stanford CS 224n?",
+      "doc_id": "cs224n_l08",
+      "pagina_oro": 33,
+      "terminos": [
+        "attention",
+        "stanford"
+      ],
+      "respuesta": "I went to Stanford CS 224n and learned",
+      "evidencia": [
+        "stanford cs 224n and learned"
+      ]
+    },
+    {
+      "id": "q08",
+      "pregunta": "What example of neural machine translation from Swahili to English is shown?",
+      "doc_id": "cs224n_l01",
+      "pagina_oro": 11,
+      "terminos": [
+        "translation",
+        "swahili"
+      ],
+      "respuesta": "Un titular sobre Malawi: «Malawi loses 2 ministers due to COVID-19 disaster»",
+      "evidencia": [
+        "malawi"
+      ]
+    }
   ]
 }

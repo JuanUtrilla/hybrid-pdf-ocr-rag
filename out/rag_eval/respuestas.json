@@ -1,0 +1,724 @@
+{
+  "modelo": "ollama:qwen2.5:3b",
+  "top_k": 5,
+  "runs": 5,
+  "solo_nativo": [
+    [
+      {
+        "id": "q01",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q02",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q03",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q04",
+        "respuesta": "Do Transformer Modifications Transfer concluded that most modifications do not meaningfully improve performance. [1]",
+        "citas": [
+          "cs224n_l08:p69[PLUMBER]"
+        ],
+        "correcta": true,
+        "cita_correcta": true,
+        "segundos": 0.1
+      },
+      {
+        "id": "q05",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      },
+      {
+        "id": "q06",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q07",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      },
+      {
+        "id": "q08",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      }
+    ],
+    [
+      {
+        "id": "q01",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      },
+      {
+        "id": "q02",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      },
+      {
+        "id": "q03",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      },
+      {
+        "id": "q04",
+        "respuesta": "Do Transformer Modifications Transfer concluded that most modifications do not meaningfully improve performance. [1]",
+        "citas": [
+          "cs224n_l08:p69[PLUMBER]"
+        ],
+        "correcta": true,
+        "cita_correcta": true,
+        "segundos": 0.1
+      },
+      {
+        "id": "q05",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q06",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q07",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q08",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      }
+    ],
+    [
+      {
+        "id": "q01",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q02",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q03",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q04",
+        "respuesta": "Do Transformer Modifications Transfer concluded that most modifications do not meaningfully improve performance. [1]",
+        "citas": [
+          "cs224n_l08:p69[PLUMBER]"
+        ],
+        "correcta": true,
+        "cita_correcta": true,
+        "segundos": 0.1
+      },
+      {
+        "id": "q05",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      },
+      {
+        "id": "q06",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      },
+      {
+        "id": "q07",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      },
+      {
+        "id": "q08",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      }
+    ],
+    [
+      {
+        "id": "q01",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q02",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      },
+      {
+        "id": "q03",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      },
+      {
+        "id": "q04",
+        "respuesta": "Do Transformer Modifications Transfer concluded that most modifications do not meaningfully improve performance. [1]",
+        "citas": [
+          "cs224n_l08:p69[PLUMBER]"
+        ],
+        "correcta": true,
+        "cita_correcta": true,
+        "segundos": 0.2
+      },
+      {
+        "id": "q05",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q06",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q07",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q08",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      }
+    ],
+    [
+      {
+        "id": "q01",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q02",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      },
+      {
+        "id": "q03",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      },
+      {
+        "id": "q04",
+        "respuesta": "Do Transformer Modifications Transfer concluded that most modifications do not meaningfully improve performance. [1]",
+        "citas": [
+          "cs224n_l08:p69[PLUMBER]"
+        ],
+        "correcta": true,
+        "cita_correcta": true,
+        "segundos": 0.1
+      },
+      {
+        "id": "q05",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q06",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      },
+      {
+        "id": "q07",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      },
+      {
+        "id": "q08",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      }
+    ]
+  ],
+  "hibrido": [
+    [
+      {
+        "id": "q01",
+        "respuesta": "The test perplexity for Transformer-ED in document generation is 2.46645, while for seq2seq with attention, it is 12.7. Therefore, Transformer-ED got a much lower perplexity, indicating better performance. [1]",
+        "citas": [
+          "cs224n_l08:p62[OCR]"
+        ],
+        "correcta": false,
+        "cita_correcta": true,
+        "segundos": 0.4
+      },
+      {
+        "id": "q02",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      },
+      {
+        "id": "q03",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q04",
+        "respuesta": "Do Transformer Modifications Transfer? \"Surprisingly, we find that most modifications do not meaningfully improve performance.\" [1]",
+        "citas": [
+          "cs224n_l08:p69[OCR]"
+        ],
+        "correcta": true,
+        "cita_correcta": true,
+        "segundos": 0.2
+      },
+      {
+        "id": "q05",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q06",
+        "respuesta": "Carion et al. use a bipartite matching loss in DETR (DEtection TRansformer) to match predicted boxes with ground truth. [3]",
+        "citas": [
+          "cs231n_l9:p107[OCR]"
+        ],
+        "correcta": true,
+        "cita_correcta": true,
+        "segundos": 0.3
+      },
+      {
+        "id": "q07",
+        "respuesta": "[1] and [2]",
+        "citas": [
+          "cs224n_l08:p47[OCR]",
+          "cs224n_l08:p33[OCR]"
+        ],
+        "correcta": false,
+        "cita_correcta": true,
+        "segundos": 0.1
+      },
+      {
+        "id": "q08",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      }
+    ],
+    [
+      {
+        "id": "q01",
+        "respuesta": "The test perplexity for Transformer-ED in document generation is 2.46645, while for seq2seq with attention, it is 12.7. Therefore, Transformer-ED got a much lower perplexity, indicating better performance. [1]",
+        "citas": [
+          "cs224n_l08:p62[OCR]"
+        ],
+        "correcta": false,
+        "cita_correcta": true,
+        "segundos": 0.4
+      },
+      {
+        "id": "q02",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q03",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q04",
+        "respuesta": "Do Transformer Modifications Transfer? \"Surprisingly, we find that most modifications do not meaningfully improve performance.\" [1]",
+        "citas": [
+          "cs224n_l08:p69[OCR]"
+        ],
+        "correcta": true,
+        "cita_correcta": true,
+        "segundos": 0.2
+      },
+      {
+        "id": "q05",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q06",
+        "respuesta": "Carion et al. use a bipartite matching loss in DETR to match predicted boxes with ground truth. [3]",
+        "citas": [
+          "cs231n_l9:p107[OCR]"
+        ],
+        "correcta": true,
+        "cita_correcta": true,
+        "segundos": 0.2
+      },
+      {
+        "id": "q07",
+        "respuesta": "[1] and [2]",
+        "citas": [
+          "cs224n_l08:p47[OCR]",
+          "cs224n_l08:p33[OCR]"
+        ],
+        "correcta": false,
+        "cita_correcta": true,
+        "segundos": 0.1
+      },
+      {
+        "id": "q08",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      }
+    ],
+    [
+      {
+        "id": "q01",
+        "respuesta": "The test perplexity for Transformer-ED in document generation is 2.46645, while for seq2seq with attention, it is 12.7. Therefore, Transformer-ED got a much lower perplexity, indicating better performance. [1]",
+        "citas": [
+          "cs224n_l08:p62[OCR]"
+        ],
+        "correcta": false,
+        "cita_correcta": true,
+        "segundos": 0.5
+      },
+      {
+        "id": "q02",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      },
+      {
+        "id": "q03",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q04",
+        "respuesta": "Do Transformer Modifications Transfer? \"Surprisingly, we find that most modifications do not meaningfully improve performance.\" [1]",
+        "citas": [
+          "cs224n_l08:p69[OCR]"
+        ],
+        "correcta": true,
+        "cita_correcta": true,
+        "segundos": 0.2
+      },
+      {
+        "id": "q05",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q06",
+        "respuesta": "Carion et al. use a bipartite matching loss in DETR to match predicted boxes with ground truth. [3]",
+        "citas": [
+          "cs231n_l9:p107[OCR]"
+        ],
+        "correcta": true,
+        "cita_correcta": true,
+        "segundos": 0.2
+      },
+      {
+        "id": "q07",
+        "respuesta": "[1] and [2]",
+        "citas": [
+          "cs224n_l08:p47[OCR]",
+          "cs224n_l08:p33[OCR]"
+        ],
+        "correcta": false,
+        "cita_correcta": true,
+        "segundos": 0.1
+      },
+      {
+        "id": "q08",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      }
+    ],
+    [
+      {
+        "id": "q01",
+        "respuesta": "The test perplexity for Transformer-ED in document generation is 2.46645, while for seq2seq with attention, it is 12.7. Therefore, Transformer-ED got a much lower perplexity, indicating better performance. [1]",
+        "citas": [
+          "cs224n_l08:p62[OCR]"
+        ],
+        "correcta": false,
+        "cita_correcta": true,
+        "segundos": 0.5
+      },
+      {
+        "id": "q02",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q03",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q04",
+        "respuesta": "Do Transformer Modifications Transfer? \"Surprisingly, we find that most modifications do not meaningfully improve performance.\" [1]",
+        "citas": [
+          "cs224n_l08:p69[OCR]"
+        ],
+        "correcta": true,
+        "cita_correcta": true,
+        "segundos": 0.2
+      },
+      {
+        "id": "q05",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q06",
+        "respuesta": "Carion et al. use a bipartite matching loss in DETR to match predicted boxes with ground truth. [3]",
+        "citas": [
+          "cs231n_l9:p107[OCR]"
+        ],
+        "correcta": true,
+        "cita_correcta": true,
+        "segundos": 0.2
+      },
+      {
+        "id": "q07",
+        "respuesta": "[1] and [2]",
+        "citas": [
+          "cs224n_l08:p47[OCR]",
+          "cs224n_l08:p33[OCR]"
+        ],
+        "correcta": false,
+        "cita_correcta": true,
+        "segundos": 0.1
+      },
+      {
+        "id": "q08",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      }
+    ],
+    [
+      {
+        "id": "q01",
+        "respuesta": "The test perplexity for Transformer-ED in document generation is 2.46645, while for seq2seq with attention, it is 12.7. Therefore, Transformer-ED got a much lower perplexity, indicating better performance. [1]",
+        "citas": [
+          "cs224n_l08:p62[OCR]"
+        ],
+        "correcta": false,
+        "cita_correcta": true,
+        "segundos": 0.4
+      },
+      {
+        "id": "q02",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      },
+      {
+        "id": "q03",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      },
+      {
+        "id": "q04",
+        "respuesta": "Do Transformer Modifications Transfer? \"Surprisingly, we find that most modifications do not meaningfully improve performance.\" [1]",
+        "citas": [
+          "cs224n_l08:p69[OCR]"
+        ],
+        "correcta": true,
+        "cita_correcta": true,
+        "segundos": 0.2
+      },
+      {
+        "id": "q05",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.0
+      },
+      {
+        "id": "q06",
+        "respuesta": "Carion et al. use a bipartite matching loss in DETR to match predicted boxes with ground truth. [3]",
+        "citas": [
+          "cs231n_l9:p107[OCR]"
+        ],
+        "correcta": true,
+        "cita_correcta": true,
+        "segundos": 0.2
+      },
+      {
+        "id": "q07",
+        "respuesta": "[1] and [2]",
+        "citas": [
+          "cs224n_l08:p47[OCR]",
+          "cs224n_l08:p33[OCR]"
+        ],
+        "correcta": false,
+        "cita_correcta": true,
+        "segundos": 0.1
+      },
+      {
+        "id": "q08",
+        "respuesta": "I don't know.",
+        "citas": [],
+        "correcta": false,
+        "cita_correcta": false,
+        "segundos": 0.1
+      }
+    ]
+  ]
+}
